@@ -45,5 +45,17 @@ node {
             CI=true npm test -- --watchAll=false
         '''
     }
-    
+
+    stage('Manual Approval') {
+        input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed'
+    }
+
+    stage('Deploy') {
+        sh '''
+            export NVM_DIR="$HOME/.nvm"
+            . "$NVM_DIR/nvm.sh"
+            npm start &
+        '''
+        sleep(time: 1, unit: 'MINUTES')
+    }
 }
