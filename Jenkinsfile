@@ -54,8 +54,15 @@ node {
         sh '''
             export NVM_DIR="$HOME/.nvm"
             . "$NVM_DIR/nvm.sh"
-            npm start &
+    
+            export HOST=0.0.0.0
+            JENKINS_NODE_COOKIE=dontKillMe nohup npm start > react-app.log 2>&1 &
+    
+            sleep 20
+            cat react-app.log || true
+            ss -tlnp | grep 3000 || true
         '''
+    
         sleep(time: 1, unit: 'MINUTES')
     }
 }
