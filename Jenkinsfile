@@ -1,12 +1,17 @@
-node {
-    properties([
-        pipelineTriggers([
-            pollSCM('H/2 * * * *')
-        ])
+properties([
+    pipelineTriggers([
+        pollSCM('H/2 * * * *')
     ])
+])
 
-    stage('Checkout') {
-        checkout scm
+node {
+    stage('Setup Node.js') {
+        sh '''
+            curl -fsSL https://deb.nodesource.com/node_18.x/nodesource.gpgkey | sudo apt-key add -
+            echo "deb https://deb.nodesource.com/node_18.x nodestream main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+            sudo apt update
+            sudo apt install -y nodejs
+        '''
     }
 
     stage('Install') {
