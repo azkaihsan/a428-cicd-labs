@@ -41,6 +41,7 @@ node {
         sh '''
             export NVM_DIR="$HOME/.nvm"
             . "$NVM_DIR/nvm.sh"
+            export NODE_OPTIONS=--openssl-legacy-provider
             npm run build
         '''
     }
