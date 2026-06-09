@@ -56,11 +56,13 @@ node {
             . "$NVM_DIR/nvm.sh"
     
             export HOST=0.0.0.0
+            export NODE_OPTIONS=--openssl-legacy-provider
+    
             JENKINS_NODE_COOKIE=dontKillMe nohup npm start > react-app.log 2>&1 &
     
             sleep 20
             cat react-app.log || true
-            ss -tlnp | grep 3000 || true
+            netstat -tln 2>/dev/null | grep 3000 || true
         '''
     
         sleep(time: 1, unit: 'MINUTES')
