@@ -7,10 +7,10 @@ properties([
 node {
     stage('Setup Node.js') {
         sh '''
-            curl -fsSL https://deb.nodesource.com/node_18.x/nodesource.gpgkey | sudo apt-key add -
-            echo "deb https://deb.nodesource.com/node_18.x nodestream main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-            sudo apt update
-            sudo apt install -y nodejs
+            curl -fsSL https://deb.nodesource.com/node_18.x/nodesource.gpgkey | apt-key add -
+            echo "deb https://deb.nodesource.com/node_18.x nodestream main" | tee /etc/apt/sources.list.d/nodesource.list
+            apt update
+            apt install -y nodejs
         '''
     }
 
