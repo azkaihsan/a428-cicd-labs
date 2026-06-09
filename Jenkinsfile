@@ -29,14 +29,6 @@ node {
         '''
     }
 
-    stage('Test') {
-        sh '''
-            export NVM_DIR="$HOME/.nvm"
-            . "$NVM_DIR/nvm.sh"
-            CI=true npm test -- --watchAll=false
-        '''
-    }
-
     stage('Build') {
         sh '''
             export NVM_DIR="$HOME/.nvm"
@@ -45,4 +37,13 @@ node {
             npm run build
         '''
     }
+
+    stage('Test') {
+        sh '''
+            export NVM_DIR="$HOME/.nvm"
+            . "$NVM_DIR/nvm.sh"
+            CI=true npm test -- --watchAll=false
+        '''
+    }
+    
 }
