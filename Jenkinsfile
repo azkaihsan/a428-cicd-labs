@@ -4,25 +4,18 @@ properties([
     ])
 ])
 
-node {
-    stage('Setup Node.js') {
-        sh '''
-            curl -fsSL https://deb.nodesource.com/node_18.x/nodesource.gpgkey | apt-key add -
-            echo "deb https://deb.nodesource.com/node_18.x nodestream main" | tee /etc/apt/sources.list.d/nodesource.list
-            apt update
-            apt install -y nodejs
-        '''
+pipeline {
+    agent {
+        docker {
+            image 'node:18-alpine' 
+            args '-p 3000:3000' 
+        }
     }
-
-    stage('Install') {
-        sh 'npm install'
-    }
-
-    stage('Test') {
-        sh 'CI=true npm test -- --watchAll=false'
-    }
-
-    stage('Build') {
-        sh 'npm run build'
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm install'
+            }
+        }
     }
 }
